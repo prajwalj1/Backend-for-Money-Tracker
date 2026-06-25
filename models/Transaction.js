@@ -16,8 +16,9 @@ const transactionSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    type: String,
+    trim: true,
+    default: 'Other',
   },
   note: {
     type: String,

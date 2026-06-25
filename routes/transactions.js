@@ -183,7 +183,7 @@ router.get('/daily-summary', auth, async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
   try {
-    const { type, amount, note, date } = req.body;
+    const { type, amount, category, note, date } = req.body;
 
     if (!type || !amount) {
       return res.status(400).json({ message: 'Type and amount are required' });
@@ -193,6 +193,7 @@ router.post('/', auth, async (req, res) => {
       user: req.user._id,
       type,
       amount,
+      category: category || 'Other',
       note: note || '',
       date: date || new Date(),
     });
@@ -214,9 +215,10 @@ router.put('/:id', auth, async (req, res) => {
       return res.status(404).json({ message: 'Transaction not found' });
     }
 
-    const { type, amount, note, date } = req.body;
+    const { type, amount, category, note, date } = req.body;
     if (type !== undefined) transaction.type = type;
     if (amount !== undefined) transaction.amount = amount;
+    if (category !== undefined) transaction.category = category;
     if (note !== undefined) transaction.note = note;
     if (date !== undefined) transaction.date = date;
 
